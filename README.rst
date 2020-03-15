@@ -1,6 +1,22 @@
 pycodestyle (formerly called pep8) - Python style guide checker
 ===============================================================
 
+.. image:: https://img.shields.io/travis/PyCQA/pycodestyle.svg
+   :target: https://travis-ci.org/PyCQA/pycodestyle
+   :alt: Build status
+
+.. image:: https://readthedocs.org/projects/pycodestyle/badge/?version=latest
+    :target: https://pycodestyle.readthedocs.io
+    :alt: Documentation Status
+
+.. image:: https://img.shields.io/pypi/wheel/pycodestyle.svg
+   :target: https://pypi.org/project/pycodestyle/
+   :alt: Wheel Status
+
+.. image:: https://badges.gitter.im/PyCQA/pycodestyle.svg
+   :alt: Join the chat at https://gitter.im/PyCQA/pycodestyle
+   :target: https://gitter.im/PyCQA/pycodestyle?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
 pycodestyle is a tool to check your Python code against some of the style
 conventions in `PEP 8`_.
 
@@ -31,7 +47,7 @@ Features
 Installation
 ------------
 
-You can install, upgrade, uninstall ``pycodestyle.py`` with these commands::
+You can install, upgrade, and uninstall ``pycodestyle.py`` with these commands::
 
   $ pip install pycodestyle
   $ pip install --upgrade pycodestyle
@@ -86,14 +102,6 @@ Or you can display how often each error was found::
 
 Links
 -----
-
-.. image:: https://img.shields.io/travis/PyCQA/pycodestyle.svg
-   :target: https://travis-ci.org/PyCQA/pycodestyle
-   :alt: Build status
-
-.. image:: https://img.shields.io/pypi/wheel/pycodestyle.svg
-   :target: https://pypi.python.org/pypi/pycodestyle
-   :alt: Wheel Status
 
 * `Read the documentation <https://pycodestyle.readthedocs.io/>`_
 

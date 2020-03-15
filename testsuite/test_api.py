@@ -28,10 +28,10 @@ class APITestCase(unittest.TestCase):
         self._saved_checks = pycodestyle._checks
         sys.stdout = PseudoFile()
         sys.stderr = PseudoFile()
-        pycodestyle._checks = dict(
-            (k, dict((f, (vals[0][:], vals[1])) for (f, vals) in v.items()))
-            for (k, v) in self._saved_checks.items()
-        )
+        pycodestyle._checks = {
+            k: {f: (vals[0][:], vals[1]) for (f, vals) in v.items()}
+            for k, v in self._saved_checks.items()
+        }
 
     def tearDown(self):
         sys.stdout = self._saved_stdout
@@ -125,7 +125,7 @@ class APITestCase(unittest.TestCase):
         report = pycodestyle.StyleGuide().check_files([E11])
         stdout = sys.stdout.getvalue().splitlines()
         self.assertEqual(len(stdout), report.total_errors)
-        self.assertEqual(report.total_errors, 17)
+        self.assertEqual(report.total_errors, 24)
         self.assertFalse(sys.stderr)
         self.reset()
 
@@ -133,7 +133,7 @@ class APITestCase(unittest.TestCase):
         report = pycodestyle.StyleGuide(paths=[E11]).check_files()
         stdout = sys.stdout.getvalue().splitlines()
         self.assertEqual(len(stdout), report.total_errors)
-        self.assertEqual(report.total_errors, 17)
+        self.assertEqual(report.total_errors, 24)
         self.assertFalse(sys.stderr)
         self.reset()
 
@@ -208,6 +208,12 @@ class APITestCase(unittest.TestCase):
         options = parse_argv('--ignore W --select E24').options
         self.assertEqual(options.select, ('E24',))
         self.assertEqual(options.ignore, ('',))
+
+        options = parse_argv('--max-doc-length=72').options
+        self.assertEqual(options.max_doc_length, 72)
+
+        options = parse_argv('').options
+        self.assertEqual(options.max_doc_length, None)
 
         pep8style = pycodestyle.StyleGuide(paths=[E11])
         self.assertFalse(pep8style.ignore_code('E112'))

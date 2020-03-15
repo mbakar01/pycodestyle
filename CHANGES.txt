@@ -1,17 +1,135 @@
 Changelog
 =========
 
-2.1.0 (unreleased)
+2.5.0 (2019-01-29)
 ------------------
+
+New checks:
+
+* E117: Over-indented code blocks
+* W505: Maximum doc-string length only when configured with --max-doc-length
 
 Changes:
 
-* Added check E74x for using variables named 'l', 'O', or 'I'; #341
-* Improved performance of `compound_statements` check; #314 / #522
-* Fixed remaining references to `pep8`; #518 / #530
-* Added `noqa` support for `maximum_line_length` check; #538
-* Added check E305 for two blank lines after toplevel methods and classes; #400
+* Remove support for EOL Python 2.6 and 3.3. PR #720.
+* Add E117 error for over-indented code blocks.
+* Allow W605 to be silenced by `# noqa` and fix the position reported by W605
+* Allow users to omit blank lines around one-liner definitions of classes and
+  functions
+* Include the function return annotation (``->``) as requiring surrounding
+  whitespace only on Python 3
+* Verify that only names can follow ``await``. Previously we allowed numbers
+  and strings.
+* Add support for Python 3.7
+* Fix detection of annotated argument defaults for E252
+* Correct the position reported by W504
 
+
+2.4.0 (2018-04-10)
+------------------
+
+New checks:
+
+* Add W504 warning for checking that a break doesn't happen after a binary
+  operator. This check is ignored by default. PR #502.
+* Add W605 warning for invalid escape sequences in string literals. PR #676.
+* Add W606 warning for 'async' and 'await' reserved keywords being introduced
+  in Python 3.7. PR #684.
+* Add E252 error for missing whitespace around equal sign in type annotated
+  function arguments with defaults values. PR #717.
+
+Changes:
+
+* An internal bisect search has replaced a linear search in order to improve
+  efficiency. PR #648.
+* pycodestyle now uses PyPI trove classifiers in order to document supported
+  python versions on PyPI. PR #654.
+* 'setup.cfg' '[wheel]' section has been renamed to '[bdist_wheel]', as
+  the former is legacy. PR #653.
+* pycodestyle now handles very long lines much more efficiently for python
+  3.2+. Fixes #643. PR #644.
+* You can now write 'pycodestyle.StyleGuide(verbose=True)' instead of
+  'pycodestyle.StyleGuide(verbose=True, paths=['-v'])' in order to achieve
+  verbosity. PR #663.
+* The distribution of pycodestyle now includes the license text in order to
+  comply with open source licenses which require this. PR #694.
+* 'maximum_line_length' now ignores shebang ('#!') lines. PR #736.
+* Add configuration option for the allowed number of blank lines. It is
+  implemented as a top level dictionary which can be easily overwritten. Fixes
+  #732. PR #733.
+
+Bugs:
+
+* Prevent a 'DeprecationWarning', and a 'SyntaxError' in future python, caused
+  by an invalid escape sequence. PR #625.
+* Correctly report E501 when the first line of a docstring is too long.
+  Resolves #622. PR #630.
+* Support variable annotation when variable start by a keyword, such as class
+  variable type annotations in python 3.6. PR #640.
+* pycodestyle internals have been changed in order to allow 'python3 -m
+  cProfile' to report correct metrics. PR #647.
+* Fix a spelling mistake in the description of E722. PR #697.
+* 'pycodestyle --diff' now does not break if your 'gitconfig' enables
+  'mnemonicprefix'. PR #706.
+
+2.3.1 (2017-01-31)
+------------------
+
+Bugs:
+
+* Fix regression in detection of E302 and E306; #618, #620
+
+2.3.0 (2017-01-30)
+------------------
+
+New Checks:
+
+* Add E722 warning for bare ``except`` clauses
+* Report E704 for async function definitions (``async def``)
+
+Bugs:
+
+* Fix another E305 false positive for variables beginning with "class" or
+  "def"
+* Fix detection of multiple spaces between ``async`` and ``def``
+* Fix handling of variable annotations. Stop reporting E701 on Python 3.6 for
+  variable annotations.
+
+2.2.0 (2016-11-14)
+------------------
+
+Announcements:
+
+* Added Make target to obtain proper tarball file permissions; #599
+
+Bugs:
+
+* Fixed E305 regression caused by #400; #593
+
+2.1.0 (2016-11-04)
+------------------
+
+Announcements:
+
+* Change all references to the pep8 project to say pycodestyle; #530
+
+Changes:
+
+* Report E302 for blank lines before an "async def"; #556
+* Update our list of tested and supported Python versions which are 2.6, 2.7,
+  3.2, 3.3, 3.4 and 3.5 as well as the nightly Python build and PyPy.
+* Report E742 and E743 for functions and classes badly named 'l', 'O', or 'I'.
+* Report E741 on 'global' and 'nonlocal' statements, as well as prohibited
+  single-letter variables.
+* Deprecated use of `[pep8]` section name in favor of `[pycodestyle]`; #591
+* Report E722 when bare except clause is used; #579
+
+Bugs:
+
+* Fix opt_type AssertionError when using Flake8 2.6.2 and pycodestyle; #561
+* Require two blank lines after toplevel def, class; #536
+* Remove accidentally quadratic computation based on the number of colons. This
+  will make pycodestyle faster in some cases; #314
 
 2.0.0 (2016-05-31)
 ------------------

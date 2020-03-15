@@ -44,7 +44,13 @@ def a():
 def b():
     pass
 #:
+#: E302:4:1
+def a():
+    pass
 
+async def b():
+    pass
+#:
 
 #: E303:5:1
 print
@@ -107,7 +113,7 @@ def a():
 
 try:
     a()
-except:
+except Exception:
     pass
 #: E305:5:1
 def a():
@@ -116,6 +122,28 @@ def a():
 # Two spaces before comments, too.
 if a():
     a()
+#:
+
+#: E306:3:5
+def a():
+    x = 1
+    def b():
+        pass
+#: E306:3:5 E306:5:9
+def a():
+    x = 2
+    def b():
+        x = 1
+        def c():
+            pass
+#: E306:3:5 E306:6:5
+def a():
+    x = 1
+    class C:
+        pass
+    x = 2
+    def b():
+        pass
 #:
 
 #: E305:8:1
@@ -128,3 +156,36 @@ def main():
 
 if __name__ == '__main__':
     main()
+# Previously just E272:1:6 E272:4:6
+#: E302:4:1 E271:1:6 E271:4:6
+async  def x():
+    pass
+
+async  def x(y: int = 1):
+    pass
+#: E704:3:1 E302:3:1
+def bar():
+    pass
+def baz(): pass
+#: E704:1:1 E302:2:1
+def bar(): pass
+def baz():
+    pass
+#: E704:4:5 E306:4:5
+def foo():
+    def bar():
+        pass
+    def baz(): pass
+#: E704:2:5 E306:3:5
+def foo():
+    def bar(): pass
+    def baz():
+        pass
+#: E302:5:1
+def f():
+    pass
+
+# wat
+@hi
+def g():
+    pass

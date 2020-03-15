@@ -11,19 +11,42 @@ from foo.bar.yourclass import YourClass
 
 import myclass
 import foo.bar.yourclass
-#: E402
+#: Okay
 __all__ = ['abc']
+
+import foo
+#: Okay
+__version__ = "42"
+
+import foo
+#: Okay
+__author__ = "Simon Gomizelj"
 
 import foo
 #: Okay
 try:
     import foo
-except:
+except ImportError:
     pass
 else:
     print('imported foo')
 finally:
     print('made attempt to import foo')
+
+import bar
+#: Okay
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore", DeprecationWarning)
+    import foo
+
+import bar
+#: Okay
+if False:
+    import foo
+elif not True:
+    import bar
+else:
+    import mwahaha
 
 import bar
 #: E402

@@ -196,8 +196,10 @@ Else if :envvar:`XDG_CONFIG_HOME` is not defined:
 Example::
 
   [pycodestyle]
+  count = False
   ignore = E226,E302,E41
   max-line-length = 160
+  statistics = True
 
 At the project level, a ``setup.cfg`` file or a ``tox.ini`` file is read if
 present. If none of these files have a ``[pycodestyle]`` section, no project
@@ -324,6 +326,8 @@ This is the current list of error and warning codes:
 +------------+----------------------------------------------------------------------+
 | E305       | expected 2 blank lines after end of function or class                |
 +------------+----------------------------------------------------------------------+
+| E306       | expected 1 blank line before a nested definition                     |
++------------+----------------------------------------------------------------------+
 +------------+----------------------------------------------------------------------+
 | **E4**     | *Import*                                                             |
 +------------+----------------------------------------------------------------------+
@@ -358,6 +362,8 @@ This is the current list of error and warning codes:
 | E714       | test for object identity should be 'is not'                          |
 +------------+----------------------------------------------------------------------+
 | E721 (^)   | do not compare types, use 'isinstance()'                             |
++------------+----------------------------------------------------------------------+
+| E722       | do not use bare except, specify exception instead                    |
 +------------+----------------------------------------------------------------------+
 | E731       | do not assign a lambda expression, use a def                         |
 +------------+----------------------------------------------------------------------+
@@ -410,6 +416,8 @@ This is the current list of error and warning codes:
 | W603       | '<>' is deprecated, use '!='                                         |
 +------------+----------------------------------------------------------------------+
 | W604       | backticks are deprecated, use 'repr()'                               |
++------------+----------------------------------------------------------------------+
+| W605       | invalid escape sequence '\x'                                         |
 +------------+----------------------------------------------------------------------+
 
 

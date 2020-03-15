@@ -82,6 +82,11 @@ that I'm calling:
 #: E501
 """
 longnospaceslongnospaceslongnospaceslongnospaceslongnospaceslongnospaceslongnospaceslongnospaces"""
+#: E501
+# Regression test for #622
+def foo():
+    """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pulvinar vitae
+    """
 #: Okay
 """
 This
@@ -116,3 +121,8 @@ import this
 #: E501
 # This
 #                                                                       almost_empty_line
+#: E501 E226
+#!/usr/bin/env python3
+
+verylong = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+double = verylong+verylong

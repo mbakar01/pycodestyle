@@ -3,7 +3,7 @@ import os.path
 import re
 import sys
 
-from pep8 import Checker, BaseReport, StandardReport, readlines
+from pycodestyle import Checker, BaseReport, StandardReport, readlines
 
 SELFTEST_REGEX = re.compile(r'\b(Okay|[EW]\d{3}):\s(.*)')
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -83,6 +83,26 @@ class TestReport(StandardReport):
         print("Test failed." if self.total_errors else "Test passed.")
 
 
+class InMemoryReport(BaseReport):
+    """
+    Collect the results in memory, without printing anything.
+    """
+
+    def __init__(self, options):
+        super(InMemoryReport, self).__init__(options)
+        self.in_memory_errors = []
+
+    def error(self, line_number, offset, text, check):
+        """
+        Report an error, according to options.
+        """
+        code = text[:4]
+        self.in_memory_errors.append('%s:%s:%s' % (
+            code, line_number, offset + 1))
+        return super(InMemoryReport, self).error(
+            line_number, offset, text, check)
+
+
 def selftest(options):
     """
     Test all check functions with test cases in docstrings.
@@ -119,7 +139,7 @@ def selftest(options):
                     print("%s: %s" % (code, source))
             else:
                 count_failed += 1
-                print("pep8.py: %s:" % error)
+                print("pycodestyle.py: %s:" % error)
                 for line in checker.lines:
                     print(line.rstrip())
     return count_failed, count_all
@@ -131,11 +151,11 @@ def init_tests(pep8style):
 
     A test file can provide many tests.  Each test starts with a
     declaration.  This declaration is a single line starting with '#:'.
-    It declares codes of expected failures, separated by spaces or 'Okay'
-    if no failure is expected.
+    It declares codes of expected failures, separated by spaces or
+    'Okay' if no failure is expected.
     If the file does not contain such declaration, it should pass all
-    tests.  If the declaration is empty, following lines are not checked,
-    until next declaration.
+    tests.  If the declaration is empty, following lines are not
+    checked, until next declaration.
 
     Examples:
 
@@ -148,6 +168,13 @@ def init_tests(pep8style):
 
     def run_tests(filename):
         """Run all the tests from a file."""
+        # Skip tests meant for higher versions of python
+        ver_match = re.search(r'python(\d)(\d)?\.py$', filename)
+        if ver_match:
+            test_against_version = tuple(int(val or 0)
+                                         for val in ver_match.groups())
+            if sys.version_info < test_against_version:
+                return
         lines = readlines(filename) + ['#:\n']
         line_offset = 0
         codes = ['Okay']
@@ -195,6 +222,3 @@ def run_tests(style):
     if options.testsuite:
         init_tests(style)
     return style.check_files()
-
-# nose should not collect these functions
-init_tests.__test__ = run_tests.__test__ = False

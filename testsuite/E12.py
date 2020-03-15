@@ -20,9 +20,9 @@ print "E124", ("visual",
 #: E124
 a = (123,
 )
-#: E129
-if (row < 0 or self.moduleCount <= row or
-    col < 0 or self.moduleCount <= col):
+#: E129 W503
+if (row < 0 or self.moduleCount <= row
+    or col < 0 or self.moduleCount <= col):
     raise Exception("%s,%s - %s" % (row, col, self.moduleCount))
 #: E126
 print "E126", (
@@ -195,9 +195,9 @@ def qualify_by_address(
     self, cr, uid, ids, context=None,
     params_to_check=frozenset(QUALIF_BY_ADDRESS_PARAM)):
     """ This gets called by the web server """
-#: E129
-if (a == 2 or
-    b == "abc def ghi"
+#: E129 W503
+if (a == 2
+    or b == "abc def ghi"
     "jkl mno"):
     return True
 #:
@@ -225,22 +225,21 @@ rv.update(dict.fromkeys((
 eat_a_dict_a_day({
         "foo": "bar",
 })
-#: E126
+#: E126 W503
 if (
     x == (
             3
-    ) or
-        y == 4):
+    )
+        or y == 4):
     pass
-#: E126
+#: E126 W503 W503
 if (
     x == (
         3
-    ) or
-    x == (
-            3
-    ) or
-        y == 4):
+    )
+    or x == (
+            3)
+        or y == 4):
     pass
 #: E131
 troublesome_hash = {
@@ -323,14 +322,14 @@ if line_removed:
 rv.update(d=('a', 'b', 'c'),
              e=42)
 #
-#: E127
+#: E127 W503
 rv.update(d=('a' + 'b', 'c'),
           e=42, f=42
                  + 42)
-#: E127
+#: E127 W503
 input1 = {'a': {'calc': 1 + 2}, 'b': 1
                           + 42}
-#: E128
+#: E128 W503
 rv.update(d=('a' + 'b', 'c'),
           e=42, f=(42
                  + 42))

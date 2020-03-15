@@ -34,8 +34,10 @@ Next, ``cd`` to the pycodestyle repository that you cloned earlier and
 create, then activate a virtualenv::
 
     $ cd pycodestyle
-    $ virtualenv pycodestyle-venv
-    $ source pycodestyle-venv/bin/activate
+    $ virtualenv venv-pycodestyle
+    $ source venv-pycodestyle/bin/activate
+
+Note that ``venv*/`` is ignored via ``.gitignore``.
 
 Now you can install the pycodestyle requirements::
 
@@ -62,9 +64,39 @@ All the tests should pass for all available interpreters, with the summary of::
 
     congratulations :)
 
-At this point you can create a pull request back to the official pycodestyles
+At this point you can create a pull request back to the official pycodestyle
 repository for review! For more information on how to make a pull request,
 GitHub has an excellent `guide`_.
+
+The current tests are written in 2 styles:
+
+* standard xUnit based only on stdlib unittest
+* functional test using a custom framework and executed by the
+  pycodestyle itself when installed in dev mode.
+
+
+Running unittest
+~~~~~~~~~~~~~~~~
+
+The tests are written using stdlib ``unittest`` module, the existing tests
+include unit, integration and functional tests.
+
+To run the tests::
+
+    $ python setup.py test
+
+Running functional
+~~~~~~~~~~~~~~~~~~
+
+When installed in dev mode, pycodestyle will have the ``--testsuite`` option
+which can be used to run the tests::
+
+    $ pip install -e .
+    $ # Run all tests.
+    $ pycodestyle --testsuite testsuite
+    $ # Run a subset of the tests.
+    $ pycodestyle --testsuite testsuite/E30.py
+
 
 .. _virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/
 .. _guide: https://guides.github.com/activities/forking/
